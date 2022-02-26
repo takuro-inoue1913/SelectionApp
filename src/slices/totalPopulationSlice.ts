@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 
-export const populationConfigurationSlice = createSlice({
-  name: 'populationConfiguration',
+export const totalPopulationSlice = createSlice({
+  name: 'totalPopulation',
   initialState: {
     graphDataList: [] as {[key: string]: number}[],
     prefList: [] as {prefName: string, color: string}[],
@@ -41,6 +41,6 @@ export const populationConfigurationSlice = createSlice({
   },
 })
 
-export const { initialAddGraphDataList, addGraphDataList, addPrefList, removeGraphDataList,  removePrefList, clearGraphDataList, clearPrefList } = populationConfigurationSlice.actions
+export const { initialAddGraphDataList, addGraphDataList, addPrefList, removeGraphDataList,  removePrefList, clearGraphDataList, clearPrefList } = totalPopulationSlice.actions
 
-export default populationConfigurationSlice.reducer
+export default totalPopulationSlice.reducer

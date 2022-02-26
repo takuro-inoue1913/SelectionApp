@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { resasApi } from '../api/resas'
-import prefCodeReducer from '../slices/prefCodeSlice'
-import populationConfigurationReducer from '../slices/populationConfigurationSlice'
+import prefStateReducer from '../slices/prefStateSlice'
+import totalPopulationReducer from '../slices/totalPopulationSlice'
 
 export const store = configureStore({
   reducer: {
     [resasApi.reducerPath]: resasApi.reducer,
-    prefCode: prefCodeReducer,
-    populationConfiguration: populationConfigurationReducer,
+    prefState: prefStateReducer,
+    totalPopulation: totalPopulationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(resasApi.middleware),

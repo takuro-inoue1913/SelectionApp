@@ -4,8 +4,8 @@ import { useAppDispatch } from '../app/hooks'
 import {
   removeGraphDataList,
   removePrefList,
-} from '../slices/populationConfigurationSlice'
-import { add, remove } from '../slices/prefCodeSlice'
+} from '../slices/totalPopulationSlice'
+import { setPrefState, clearPrefState } from '../slices/prefStateSlice'
 
 export const Prefectures: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -18,9 +18,9 @@ export const Prefectures: React.FC = () => {
   const changePrefCodeList = useCallback(
     (checked: boolean, currentCode: number, currentName: string) => {
       if (checked) {
-        dispatch(add({ currentCode, currentName }))
+        dispatch(setPrefState({ currentCode, currentName }))
       } else {
-        dispatch(remove({ currentCode }))
+        dispatch(clearPrefState())
         dispatch(removePrefList({ prefName: currentName }))
         dispatch(removeGraphDataList({ key: currentName }))
       }

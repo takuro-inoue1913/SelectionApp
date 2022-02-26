@@ -5,12 +5,12 @@ import {
   initialAddGraphDataList,
   addGraphDataList,
   addPrefList,
-} from '../slices/populationConfigurationSlice'
-import { getPopulationComposition } from '../api/resas'
+} from '../slices/totalPopulationSlice'
+import { getTotalPopulation } from '../api/resas'
 import { randomColorGenerate } from '../helpers/prefectures'
 
 export const LineGraph: React.FC = () => {
-  const { prefCode, populationConfiguration } = useAppSelector((state) => state)
+  const { prefState, totalPopulation } = useAppSelector((state) => state)
   const dispatch = useAppDispatch()
 
   const createGraphData = (
@@ -19,24 +19,26 @@ export const LineGraph: React.FC = () => {
     // 折れ線グラフ表示用のデータを作成
     dispatch(
       addPrefList({
-        prefName: prefCode.currentName,
+        prefName: prefState.currentName,
         // グラフの折れ線の色をランダムに生成
         color: randomColorGenerate(),
       })
     )
     response.forEach((i) => {
-      if (populationConfiguration.graphDataList.length === 0) {
+      if (totalPopulation.graphDataList.length === 0) {
+        // graphDataListのデータがない場合新しく追加
         dispatch(
           initialAddGraphDataList({
             year: i.year,
-            [`${prefCode.currentName}`]: i.value,
+            [`${prefState.currentName}`]: i.value,
           })
         )
       } else {
+        // graphDataListのデータがある場合、都道府県のプロパティを配列に追加
         dispatch(
           addGraphDataList({
             year: i.year,
-            key: prefCode.currentName,
+            key: prefState.currentName,
             value: i.value,
           })
         )
@@ -45,23 +47,23 @@ export const LineGraph: React.FC = () => {
   }
 
   useEffect(() => {
-    if (prefCode.currentCode) {
+    if (prefState.currentCode) {
       ;(async () => {
-        const response = await getPopulationComposition(prefCode.currentCode)
+        const response = await getTotalPopulation(prefState.currentCode)
         if (!response) {
           return
         }
         createGraphData(response)
       })()
     }
-  }, [prefCode.currentCode])
+  }, [prefState.currentCode])
 
   return (
     <div style={ContainerStyle}>
       <LineChart
         width={700}
         height={400}
-        data={populationConfiguration.graphDataList}
+        data={totalPopulation.graphDataList}
         margin={{
           top: 40,
           right: 30,
@@ -91,7 +93,7 @@ export const LineGraph: React.FC = () => {
             offset: -20,
           }}
         />
-        {populationConfiguration.prefList.map((sub) => (
+        {totalPopulation.prefList.map((sub) => (
           <Line
             key={sub.prefName}
             name={sub.prefName}
