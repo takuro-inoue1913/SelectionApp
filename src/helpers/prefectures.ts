@@ -5,7 +5,7 @@
  * @param last 
  * @returns string[]
  */
-export function AlphabeticalOrderRange(first: string, last: string) {
+export function alphabeticalOrderRange(first: string, last: string) {
   const firstNum = first.charCodeAt(0)
   const lastNum = last.charCodeAt(0)
   const result = []

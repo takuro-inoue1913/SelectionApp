@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { AlphabeticalOrderRange } from '../helpers/prefectures'
-// type PrefecturesProps = {
-//   prefectures: string[]
-// }
+import React from 'react'
+import { useQueryPrefectures } from '../api/resas'
 
 export const Prefectures: React.FC = () => {
-  const [prefectureLabels, setPrefectureLabels] = useState<string[]>([])
-  useMemo(() => {
-    setPrefectureLabels(AlphabeticalOrderRange('A', 'R'))
-  }, [])
+  const { data: prefectures, error: getPrefecturesError } =
+    useQueryPrefectures()
+
+  if (getPrefecturesError) {
+    return <p>{getPrefecturesError.message}</p>
+  }
 
   return (
     <div style={ContainerStyle}>
       <p style={titleTextStyle}>都道府県</p>
       <div>
-        {prefectureLabels.map((label) => (
-          <label htmlFor={label} style={labelStyle} className="mycheckbox">
-            <input type="checkbox" name={label} />
-            {label}
-          </label>
-        ))}
+        {prefectures &&
+          prefectures.result.map((prefecture) => (
+            <label htmlFor={prefecture.prefName} style={labelStyle}>
+              <input type="checkbox" name={prefecture.prefName} />
+              {prefecture.prefName}
+            </label>
+          ))}
       </div>
     </div>
   )
@@ -36,5 +36,6 @@ const titleTextStyle: React.CSSProperties = {
 
 const labelStyle: React.CSSProperties = {
   display: 'inline-block',
-  width: '16.6%',
+  width: '25%',
+  marginBottom: 12,
 }
