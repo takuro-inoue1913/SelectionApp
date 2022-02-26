@@ -1,21 +1,11 @@
 import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { Provider } from 'react-redux'
+import { store } from './app/store'
 import { Prefectures } from './components/Prefectures'
 import { TopTitle } from './components/TopTitle'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-      staleTime: 30000,
-    },
-  },
-})
-
 export const App: React.FC = () => (
-  <QueryClientProvider client={queryClient}>
+  <Provider store={store}>
     <main>
       <section style={topTitleSectionStyle}>
         <TopTitle title="Title" />
@@ -24,8 +14,7 @@ export const App: React.FC = () => (
         <Prefectures />
       </section>
     </main>
-    <ReactQueryDevtools initialIsOpen={false} />
-  </QueryClientProvider>
+  </Provider>
 )
 
 const topTitleSectionStyle: React.CSSProperties = {

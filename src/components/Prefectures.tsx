@@ -1,12 +1,16 @@
 import React from 'react'
-import { useQueryPrefectures } from '../api/resas'
+import { useGetPrefecturesQuery } from '../api/resas'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
+import { add, remove } from '../slices/prefCodeSlice'
 
 export const Prefectures: React.FC = () => {
+  const prefCode = useAppSelector((state) => state.prefCode)
+  const dispatch = useAppDispatch()
   const { data: prefectures, error: getPrefecturesError } =
-    useQueryPrefectures()
+    useGetPrefecturesQuery()
 
   if (getPrefecturesError) {
-    return <p>{getPrefecturesError.message}</p>
+    return <p>{getPrefecturesError}</p>
   }
 
   return (
@@ -16,10 +20,16 @@ export const Prefectures: React.FC = () => {
         {prefectures &&
           prefectures.result.map((prefecture) => (
             <label htmlFor={prefecture.prefName} style={labelStyle}>
-              <input type="checkbox" name={prefecture.prefName} />
+              <input
+                type="checkbox"
+                name={prefecture.prefName}
+                id={prefecture.prefName}
+                onClick={() => dispatch(add(prefecture.prefCode))}
+              />
               {prefecture.prefName}
             </label>
           ))}
+        {console.log(prefCode.list)}
       </div>
     </div>
   )

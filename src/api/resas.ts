@@ -1,15 +1,16 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { useQuery } from 'react-query'
-import axios from './axios'
+export const resasApi = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://opendata.resas-portal.go.jp/api/v1/',
+    prepareHeaders: (headers) => {
+      headers.set('X-API-KEY', process.env.REACT_APP_RESAS_API_KEY as string)
+      return headers
+    }}),
+  endpoints: (builder) => ({
+    getPrefectures: builder.query<ResasApi.GetPrefecturesResponse, void>({
+      query: () => `prefectures`,
+    }),
+  }),
+})
 
-export async function fetchPrefectures(): Promise<ResasApi.GetPrefecturesResponse> {
-  const { data } = await axios.get<ResasApi.GetPrefecturesResponse>('/prefectures')
-  return data
-}
-
-export const useQueryPrefectures = () => useQuery<ResasApi.GetPrefecturesResponse, Error>({
-    queryKey: 'prefectures',
-    queryFn: fetchPrefectures,
-    cacheTime: 10000,
-    staleTime: 10000,
-  })
+export const { useGetPrefecturesQuery } = resasApi
