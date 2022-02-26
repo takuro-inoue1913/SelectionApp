@@ -14,3 +14,17 @@ export function alphabeticalOrderRange(first: string, last: string) {
   }
   return result
 }
+
+/**
+ * ランダムなカラーコードを返します
+ * @returns string
+ */
+export function randomColorGenerate() {
+  let color = Math.ceil(16777215 * Math.random()).toString(16)
+  let {length} = color
+  while(length < 6){
+    color = `0${color}`
+    length += 1
+  }
+  return `#${color}`
+}

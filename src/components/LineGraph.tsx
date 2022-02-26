@@ -1,19 +1,67 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, Legend } from 'recharts'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
+import {
+  initialAddGraphDataList,
+  addGraphDataList,
+  addPrefList,
+} from '../slices/populationConfigurationSlice'
+import { getPopulationComposition } from '../api/resas'
+import { randomColorGenerate } from '../helpers/prefectures'
 
 export const LineGraph: React.FC = () => {
-  const data = [
-    { prefCode: 1, prefName: '北海道', year: 1960, value: 5000 },
-    { prefCode: 2, prefName: '東京', year: 1965, value: 3000 },
-    { prefCode: 3, prefName: '福岡', year: 1970, value: 2000 },
-  ]
+  const { prefCode, populationConfiguration } = useAppSelector((state) => state)
+  const dispatch = useAppDispatch()
+
+  const createGraphData = (
+    response: PopulationComposition.TotalPopulation[]
+  ) => {
+    // 折れ線グラフ表示用のデータを作成
+    dispatch(
+      addPrefList({
+        prefName: prefCode.currentName,
+        // グラフの折れ線の色をランダムに生成
+        color: randomColorGenerate(),
+      })
+    )
+    response.forEach((i) => {
+      if (populationConfiguration.graphDataList.length === 0) {
+        dispatch(
+          initialAddGraphDataList({
+            year: i.year,
+            [`${prefCode.currentName}`]: i.value,
+          })
+        )
+      } else {
+        dispatch(
+          addGraphDataList({
+            year: i.year,
+            key: prefCode.currentName,
+            value: i.value,
+          })
+        )
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (prefCode.currentCode) {
+      ;(async () => {
+        const response = await getPopulationComposition(prefCode.currentCode)
+        if (!response) {
+          return
+        }
+        createGraphData(response)
+      })()
+    }
+  }, [prefCode.currentCode])
 
   return (
     <div style={ContainerStyle}>
       <LineChart
         width={700}
         height={400}
-        data={data}
+        data={populationConfiguration.graphDataList}
         margin={{
           top: 40,
           right: 30,
@@ -37,19 +85,21 @@ export const LineGraph: React.FC = () => {
           }}
         />
         <YAxis
-          dataKey="value"
           label={{
             value: '人口数',
             position: 'insideTopLeft',
             offset: -20,
           }}
         />
-        <Line
-          name="prefName"
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-        />
+        {populationConfiguration.prefList.map((sub) => (
+          <Line
+            key={sub.prefName}
+            name={sub.prefName}
+            type="monotone"
+            dataKey={sub.prefName}
+            stroke={sub.color}
+          />
+        ))}
       </LineChart>
     </div>
   )

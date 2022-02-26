@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react'
 import { useGetPrefecturesQuery } from '../api/resas'
-import { useAppSelector, useAppDispatch } from '../app/hooks'
+import { useAppDispatch } from '../app/hooks'
+import {
+  removeGraphDataList,
+  removePrefList,
+} from '../slices/populationConfigurationSlice'
 import { add, remove } from '../slices/prefCodeSlice'
 
 export const Prefectures: React.FC = () => {
-  const prefCode = useAppSelector((state) => state.prefCode)
   const dispatch = useAppDispatch()
   const { data: prefectures, error: getPrefecturesError } =
     useGetPrefecturesQuery()
@@ -13,11 +16,13 @@ export const Prefectures: React.FC = () => {
    * 都道府県チェックボックスハンドリング用
    */
   const changePrefCodeList = useCallback(
-    (checked: boolean, code: number) => {
+    (checked: boolean, currentCode: number, currentName: string) => {
       if (checked) {
-        dispatch(add(code))
+        dispatch(add({ currentCode, currentName }))
       } else {
-        dispatch(remove(code))
+        dispatch(remove({ currentCode }))
+        dispatch(removePrefList({ prefName: currentName }))
+        dispatch(removeGraphDataList({ key: currentName }))
       }
     },
     [dispatch]
@@ -43,13 +48,16 @@ export const Prefectures: React.FC = () => {
                 name={prefecture.prefName}
                 id={prefecture.prefName}
                 onChange={(event) =>
-                  changePrefCodeList(event.target.checked, prefecture.prefCode)
+                  changePrefCodeList(
+                    event.target.checked,
+                    prefecture.prefCode,
+                    prefecture.prefName
+                  )
                 }
               />
               {prefecture.prefName}
             </label>
           ))}
-        {console.log(prefCode.list)}
       </div>
     </div>
   )
