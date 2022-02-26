@@ -3,7 +3,7 @@ import axios from './axios'
 
 // 値が長期間変化しないものはcreateApiを使用します
 export const resasApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://opendata.resas-portal.go.jp/api/v1/',
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_RESAS_BASE_URL,
     prepareHeaders: (headers) => {
       headers.set('X-API-KEY', process.env.REACT_APP_RESAS_API_KEY as string)
       return headers
