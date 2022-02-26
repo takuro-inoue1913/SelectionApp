@@ -11,7 +11,7 @@ export const prefCode = createSlice({
       state.list.push(action.payload as number)
     },
     remove: (state, action) => {
-      state.list.filter(code => code !== action.payload as number)
+      state.list = state.list.filter(code => code !== action.payload as number)
     },
     clear: (state) => {
       state.list = []

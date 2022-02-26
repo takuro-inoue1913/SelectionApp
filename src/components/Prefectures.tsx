@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useGetPrefecturesQuery } from '../api/resas'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { add, remove } from '../slices/prefCodeSlice'
@@ -8,6 +8,20 @@ export const Prefectures: React.FC = () => {
   const dispatch = useAppDispatch()
   const { data: prefectures, error: getPrefecturesError } =
     useGetPrefecturesQuery()
+
+  /**
+   * 都道府県チェックボックスハンドリング用
+   */
+  const changePrefCodeList = useCallback(
+    (checked: boolean, code: number) => {
+      if (checked) {
+        dispatch(add(code))
+      } else {
+        dispatch(remove(code))
+      }
+    },
+    [dispatch]
+  )
 
   if (getPrefecturesError) {
     return <p>{getPrefecturesError}</p>
@@ -19,12 +33,18 @@ export const Prefectures: React.FC = () => {
       <div>
         {prefectures &&
           prefectures.result.map((prefecture) => (
-            <label htmlFor={prefecture.prefName} style={labelStyle}>
+            <label
+              htmlFor={prefecture.prefName}
+              style={labelStyle}
+              key={prefecture.prefName}
+            >
               <input
                 type="checkbox"
                 name={prefecture.prefName}
                 id={prefecture.prefName}
-                onClick={() => dispatch(add(prefecture.prefCode))}
+                onChange={(event) =>
+                  changePrefCodeList(event.target.checked, prefecture.prefCode)
+                }
               />
               {prefecture.prefName}
             </label>
