@@ -1,8 +1,7 @@
-
 /**
  * 指定された範囲の英単語をアルファベット順で返します
- * @param first 
- * @param last 
+ * @param first
+ * @param last
  * @returns string[]
  */
 export function alphabeticalOrderRange(first: string, last: string) {
@@ -21,8 +20,8 @@ export function alphabeticalOrderRange(first: string, last: string) {
  */
 export function randomColorGenerate() {
   let color = Math.ceil(16777215 * Math.random()).toString(16)
-  let {length} = color
-  while(length < 6){
+  let { length } = color
+  while (length < 6) {
     color = `0${color}`
     length += 1
   }

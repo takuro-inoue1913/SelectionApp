@@ -6,9 +6,12 @@ export const prefStateSlice = createSlice({
     currentCode: 0,
     currentName: '',
   },
-  
+
   reducers: {
-    setPrefState: (state, action: {payload: {currentCode: number, currentName: string}}) => {
+    setPrefState: (
+      state,
+      action: { payload: { currentCode: number; currentName: string } }
+    ) => {
       state.currentCode = action.payload.currentCode
       state.currentName = action.payload.currentName
     },

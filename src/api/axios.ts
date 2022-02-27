@@ -5,5 +5,5 @@ export default axios.create({
   headers: {
     'Content-Type': 'application/json',
     'X-API-KEY': process.env.REACT_APP_RESAS_API_KEY as string,
-  }
+  },
 })
