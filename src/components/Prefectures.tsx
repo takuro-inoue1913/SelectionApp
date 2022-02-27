@@ -68,7 +68,7 @@ const ContainerStyle: React.CSSProperties = {
 }
 
 const titleTextStyle: React.CSSProperties = {
-  fontSize: 12,
+  fontSize: 18,
   marginBottom: 12,
   textAlign: 'center',
 }

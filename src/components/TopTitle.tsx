@@ -15,7 +15,7 @@ const topTitleStyle: React.CSSProperties = {
 }
 
 const textStyle: React.CSSProperties = {
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: 400,
   color: '#37352f',
   padding: '12px 0',
