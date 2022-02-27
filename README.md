@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# 今回の課題で使用した技術
+* React Typescript v17
+* Redux Toolkit RTK Query
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 本番環境
+* Firebase (Hosting)
 
-## Available Scripts
+### URL
+https://populationtransitiongraph.web.app
 
-In the project directory, you can run:
+https://user-images.githubusercontent.com/54260834/155903830-c1fc2d5f-39d2-4601-a26f-2fb0c586ddfe.mov
 
-### `npm start`
+# テストケース
+1. 最初の画面にアクセスした際に都道府県一覧を取得し、数分チェックボックスが表示されているか
+2. 各都道府県のチェックボックスをクリックすると下記のグラフ図に都道府県の名前のついた凡例とグラフ線が表示されるか
+3. チェックボックスをオフにすると該当の都道府県の凡例とグラフ線がグラフ図から削除されるか
+4. 複数のチェックボックスをクリックすると数分のグラフ線、凡例が表示されるか
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# こだわったポイント
+RESAS APIで取得したデータをStoreで状態管理し、無駄なリクエストを抑えた。  
+都道府県を選択したときにグラフ線の色を固定にしたくなかったのでランダムで色を作るプログラムを作った。  
+また、今後新機能が入ることを想定して汎用性のあるコード設計にした。  
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# PR
+### 課題
+Redux Toolkit RTK Queryを使うのが今回初めてで独自の仕様を理解するのが大変だった。  
+### 解決
+一度サンプルのコードを持ってきてライブラリの仕様を確認し、少しずつ今回の要件に当てはめて行って実装した
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 課題
+グラフ描画の際に渡すデータ構造が特殊で分からなかった
+### 解決
+まずはサンプルの配列を作り、予定通りの描画ができるまで試行錯誤し、その後そのデータを実現させるようにREST APIから取得したデータを加工して表示できた
