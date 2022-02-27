@@ -1,6 +1,6 @@
 {
   "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "都道県別総人口図表",
   "icons": [
     {
       "src": "favicon.ico",
