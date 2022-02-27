@@ -10,6 +10,32 @@ https://populationtransitiongraph.web.app
 
 https://user-images.githubusercontent.com/54260834/155903830-c1fc2d5f-39d2-4601-a26f-2fb0c586ddfe.mov
 
+# How Use
+### インストール
+```bash
+npm install
+```
+
+### 起動
+```bash
+npm run start
+```
+
+### テスト
+```bash
+npm run test
+```
+
+### linter
+```bash
+npm run lint:fix
+```
+
+### prettier
+```bash
+npm run fmt
+```
+
 # テストケース
 1. 最初の画面にアクセスした際に都道府県一覧を取得し、数分チェックボックスが表示されているか
 2. 各都道府県のチェックボックスをクリックすると下記のグラフ図に都道府県の名前のついた凡例とグラフ線が表示されるか
