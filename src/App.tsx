@@ -4,18 +4,21 @@ import { store } from './app/store'
 import { LineGraph } from './components/LineGraph'
 import { Prefectures } from './components/Prefectures'
 import { TopTitle } from './components/TopTitle'
+import { MediaQueryProvider } from './context/MediaQueryProvider'
 
 export const App: React.FC = () => (
   <Provider store={store}>
-    <main>
-      <section style={topTitleSectionStyle}>
-        <TopTitle title="Title" />
-      </section>
-      <section>
-        <Prefectures />
-        <LineGraph />
-      </section>
-    </main>
+    <MediaQueryProvider>
+      <main>
+        <section style={topTitleSectionStyle}>
+          <TopTitle title="都道県別総人口図表" />
+        </section>
+        <section>
+          <Prefectures />
+          <LineGraph />
+        </section>
+      </main>
+    </MediaQueryProvider>
   </Provider>
 )
 

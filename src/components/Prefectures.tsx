@@ -70,10 +70,12 @@ const ContainerStyle: React.CSSProperties = {
 const titleTextStyle: React.CSSProperties = {
   fontSize: 12,
   marginBottom: 12,
+  textAlign: 'center',
 }
 
 const labelStyle: React.CSSProperties = {
   display: 'inline-block',
   width: '25%',
   marginBottom: 12,
+  textAlign: 'center',
 }
