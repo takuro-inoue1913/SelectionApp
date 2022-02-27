@@ -68,7 +68,8 @@
         "no-unreachable": "error",
         "import/prefer-default-export": "off",
         "react/function-component-definition": "off",
-        "@typescript-eslint/no-floating-promises": "off"
+        "@typescript-eslint/no-floating-promises": "off",
+        "testing-library/await-async-utils": "off"
     },
     "settings": {
         "import/resolver": {
