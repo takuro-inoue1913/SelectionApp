@@ -11,7 +11,7 @@ https://populationtransitiongraph.web.app
 https://user-images.githubusercontent.com/54260834/155903830-c1fc2d5f-39d2-4601-a26f-2fb0c586ddfe.mov
 
 # How Use
-### インストール
+### Install
 ```bash
 yarn
 ```
