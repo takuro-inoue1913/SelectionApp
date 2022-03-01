@@ -13,27 +13,28 @@ https://user-images.githubusercontent.com/54260834/155903830-c1fc2d5f-39d2-4601-
 # How Use
 ### インストール
 ```bash
-npm install
+yarn
 ```
 
 ### 起動
 ```bash
-npm run start
+yarn start
 ```
 
 ### テスト
+// ローカルサーバーを立ち上げた状態で
 ```bash
-npm run test
+yarn cy:run
 ```
 
 ### linter
 ```bash
-npm run lint:fix
+yarn lint:fix
 ```
 
 ### prettier
 ```bash
-npm run fmt
+yarn fmt
 ```
 
 # テストケース
